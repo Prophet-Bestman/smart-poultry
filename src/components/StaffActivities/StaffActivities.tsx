@@ -1,6 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "../custom";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 export default function StaffActivities({ showAll }: { showAll?: boolean }) {
   const columns: ColumnDef<FarmStaffActiviyType>[] = [
@@ -56,9 +57,12 @@ export default function StaffActivities({ showAll }: { showAll?: boolean }) {
           <h3 className="text-xl font-medium text-gray-600">
             Farm Staff Activities Summary
           </h3>
-          <Button variant="ghost" size="sm">
-            See All
-          </Button>
+
+          <Link to="/staff-activities">
+            <Button variant="ghost" size="sm">
+              See All
+            </Button>
+          </Link>
         </div>
       )}
       <DataTable columns={columns} data={showAll ? data : data.slice(0, 3)} />
