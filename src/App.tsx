@@ -1,10 +1,12 @@
 import "./App.css";
-import { Button } from "@/components/ui/button";
+import { DashboardStats } from "./components/Dashboard";
+import { StaffActivities } from "./components/StaffActivities";
 
 function App() {
   return (
-    <div>
-      <Button>Hello</Button>
+    <div className="w-full h-full space-y-10">
+      <DashboardStats />
+      <StaffActivities />
     </div>
   );
 }
