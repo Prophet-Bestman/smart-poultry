@@ -35,10 +35,6 @@ export default function AddStaff({ isOpen, onClose }: AddStaffProps) {
   const { isPending } = useSignup();
 
   const onSubmit = async (data: SignupValues) => {
-    // mutate(data);
-
-    console.log(data);
-
     toast({
       title: "Success",
       description: "User created successfully",

@@ -6,8 +6,6 @@ import { Link, useLocation } from "react-router-dom";
 export default function SideNav() {
   const { pathname } = useLocation();
 
-  console.log(pathname);
-
   return (
     <div className="border-r border-slate-200 w-[400px] px-6 py-12 space-y-4">
       {navLinks.map((link) => (

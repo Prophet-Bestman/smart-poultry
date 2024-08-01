@@ -1,32 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
 import { SiThunderbird } from "react-icons/si";
 
-import { realTimeDb } from "@/config/firebase";
-import { onValue, ref, update } from "firebase/database";
+import { AiFillAlert } from "react-icons/ai";
+import { useClockIn, useGetFarmInfo } from "@/api/farm";
 
 export default function MainHeader() {
-  const [values, setValues] = useState<any>();
+  const { data: values } = useGetFarmInfo();
 
-  useEffect(() => {
-    const dataRef = ref(realTimeDb);
-    onValue(dataRef, (snapshot) => {
-      const data = snapshot.val();
-      setValues(data);
+  const { mutate: clockInOut, isPending } = useClockIn();
 
-      console.log(data);
-    });
-  }, []);
-
-  const writeData = () => {
-    update(ref(realTimeDb, "FarmWorker/"), {
-      Worker3: values?.FarmWorker?.Worker3 === 1 ? 0 : 1,
-    });
-  };
-
-  console.log(values);
   return (
     <div className="flex items-center h-[80px] justify-between px-12 py-auto border-b border-purple-200">
       <div className="flex items-center gap-3">
@@ -34,10 +18,25 @@ export default function MainHeader() {
         <p className="text-sm font-bold text-purple-800">SMART POULTRY</p>
       </div>
 
+      <div className="flex items-center gap-6">
+        <AiFillAlert
+          className={`${
+            values?.FarmData.Intruder === "False"
+              ? "text-red-600 animate-ping"
+              : "text-gray-600 text-3xl"
+          }`}
+        />
+
+        {values && (
+          <Button onClick={() => clockInOut(values)} variant="primary">
+            {isPending ? "Clocking" : "Clock"}{" "}
+            {values?.FarmWorker?.Worker3 === 1 ? "Out" : "In"}
+            {isPending && "..."}
+          </Button>
+        )}
+      </div>
+
       {/* <Button variant="ghost">Log out</Button> */}
-      <Button onClick={writeData} variant="primary">
-        Clock {values?.FarmWorker?.Worker3 === 1 ? "Out" : "In"}
-      </Button>
     </div>
   );
 }
