@@ -31,7 +31,7 @@ export default function Login() {
     mutate(data);
   };
   return (
-    <div cl>
+    <div>
       <div className="flex items-center justify-between px-12 py-4 border-b border-purple-200">
         <div className="flex items-center gap-3">
           <SiThunderbird className="text-3xl text-purple-800" />
