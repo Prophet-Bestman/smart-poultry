@@ -5,6 +5,8 @@ import { SiThunderbird } from "react-icons/si";
 
 import { AiFillAlert } from "react-icons/ai";
 import { useClockIn, useGetFarmInfo } from "@/api/farm";
+import { signOut } from "firebase/auth";
+import { auth } from "@/config/firebase";
 
 export default function MainHeader() {
   const { data: values } = useGetFarmInfo();
@@ -19,13 +21,23 @@ export default function MainHeader() {
       </div>
 
       <div className="flex items-center gap-6">
-        <AiFillAlert
-          className={`${
-            values?.FarmData.Intruder === "False"
-              ? "text-red-600 animate-ping"
-              : "text-gray-600 text-3xl"
-          }`}
-        />
+        <a
+          href={
+            values?.FarmData?.IP_Address === "null"
+              ? "#"
+              : `${values?.FarmData?.IP_Address.replace("http//:", "http://")}`
+          }
+          target={values?.FarmData?.IP_Address === "null" ? "_self" : "_blank"}
+        >
+          <AiFillAlert
+            // onClick={onOpen}
+            className={`${
+              values?.FarmData.Intruder === "True"
+                ? "text-red-600 animate-ping"
+                : "text-gray-600 text-3xl"
+            }`}
+          />
+        </a>
 
         {values && (
           <Button onClick={() => clockInOut(values)} variant="primary">
@@ -34,9 +46,10 @@ export default function MainHeader() {
             {isPending && "..."}
           </Button>
         )}
+        <Button onClick={() => signOut(auth)} variant="ghost">
+          Log out
+        </Button>
       </div>
-
-      {/* <Button variant="ghost">Log out</Button> */}
     </div>
   );
 }

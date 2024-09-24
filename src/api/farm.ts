@@ -32,6 +32,7 @@ export const useGetFarmInfo = () =>
     queryFn: (): Promise<FarmInfoType> => {
       return fetchData().then((res) => res);
     },
+    refetchInterval: 3000,
   });
 
 export const useClockIn = () => {

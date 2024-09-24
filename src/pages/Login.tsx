@@ -31,7 +31,7 @@ export default function Login() {
     mutate(data);
   };
   return (
-    <div>
+    <div cl>
       <div className="flex items-center justify-between px-12 py-4 border-b border-purple-200">
         <div className="flex items-center gap-3">
           <SiThunderbird className="text-3xl text-purple-800" />
@@ -41,7 +41,7 @@ export default function Login() {
         <Button variant="ghost">Switch to Admin</Button>
       </div>
 
-      <div className="flex items-center justify-center h-[90vh]">
+      <div className="flex items-center justify-center h-[90vh] bg-gray-100">
         <div className="px-4 py-8 border border-purple-300 w-[400px] rounded-xl">
           <h1 className="text-xl font-semibold text-purple-800 mb-7">
             Smart Poultry Staff Login

@@ -14,9 +14,11 @@ interface FarmInfoType {
 interface FarmData {
   FanStatus: string;
   Humidity: number;
+  HeatStatus: string;
   Intruder: string;
   Temperature: number;
   lightStatus: string;
+  IP_Address: string;
 }
 
 interface FarmWorker {

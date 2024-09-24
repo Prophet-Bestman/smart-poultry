@@ -9,6 +9,40 @@ import {
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
+export const useLogin = () => {
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: async (values: LoginValues) => {
+      const { email, password } = values;
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      return userCredential.user;
+    },
+    onSuccess: () => {
+      toast({
+        description: "Login Successfull",
+        duration: 2000,
+        variant: "success",
+      });
+      setTimeout(() => {
+        navigate("/");
+      }, 4000);
+    },
+    onError: (err) => {
+      console.log(err);
+      toast({
+        description: err?.message,
+        duration: 2000,
+        variant: "destructive",
+      });
+    },
+  });
+};
+
 export const useSignup = () => {
   const { toast } = useToast();
   return useMutation({
@@ -34,38 +68,6 @@ export const useSignup = () => {
         duration: 2000,
         variant: "success",
       });
-    },
-    onError: (err) => {
-      console.log(err);
-      toast({
-        description: err?.message,
-        duration: 2000,
-        variant: "destructive",
-      });
-    },
-  });
-};
-
-export const useLogin = () => {
-  const { toast } = useToast();
-  const navigate = useNavigate();
-  return useMutation({
-    mutationFn: async (values: LoginValues) => {
-      const { email, password } = values;
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      return userCredential.user;
-    },
-    onSuccess: () => {
-      toast({
-        description: "Login Successfull",
-        duration: 2000,
-        variant: "success",
-      });
-      navigate("/");
     },
     onError: (err) => {
       console.log(err);

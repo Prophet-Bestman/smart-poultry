@@ -9,6 +9,7 @@ import {
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth, db } from "../config/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 interface AuthContextType {
   user: LoggedInUser | null;
@@ -25,6 +26,7 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<LoggedInUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDocument = async (user: User) => {
@@ -48,7 +50,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
       if (user) {
         fetchDocument(user);
         setLoading(false);
-      }
+      } else navigate("/login");
     });
     return () => unsubscribe();
   }, []);
